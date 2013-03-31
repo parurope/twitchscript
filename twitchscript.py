@@ -17,6 +17,7 @@ Requirements:
 
 Todo:
 - input validation
+- error handling
 - fix problem with special characters
 
 """
