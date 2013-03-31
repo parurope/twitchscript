@@ -2,7 +2,7 @@
 
 """ 
 
-Twitchscript is a little Python script for linux, enabling you to start Twitch Streams from the CLI.
+Twitchscript is a little Python script for Linux, enabling you to start Twitch Streams from the CLI.
 I mainly use it for watching Streams with the Raspberry Pi which is connected to my TV (via HDMI). 
 However you can also use it on a usual machine with vlc.
 It might not be perfect but it does work atleast :)
@@ -36,20 +36,8 @@ channelLimit = 20
 games = []
 channels = []
 
-def diag():
-	print 'channels: '
-	print channels
-	print '\nlength channels: ' + str(len(channels))
-	print '\ngames: ' 
-	print games 
-	print '\nlength games:' + str(len(games))
-	print '\n'
-	print channelLimit 
-	print gameLimit
-	print '\n\n'
-
 def getTwitchApiRequestStreams(limit, game):
-	print 'using: ' + twitchApiUrl + 'streams?limit=' + str(limit) + '&game=' + game
+	#print 'using: ' + twitchApiUrl + 'streams?limit=' + str(limit) + '&game=' + game
 	return urllib2.urlopen(twitchApiUrl + 'streams?limit=' + str(limit) + '&game=' + game).read()
 
 def getTwitchApiRequestGames(limit):
