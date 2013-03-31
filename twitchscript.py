@@ -101,7 +101,7 @@ def menu():
 		print '\nLoading'
 		getGames()
 		clearScreen()
-		print '\nWelcome to TwitchChannelViewer (TCV)!'
+		print '\nWelcome to twitchscript!'
 		print '\nShowing top %s games:' % str(gameLimit)
 		print '------------------------------------------------------------'
 		showGames()
