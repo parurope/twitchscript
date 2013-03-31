@@ -2,8 +2,9 @@
 
 """ 
 
-TwitchScript is a little Python script for linux, enabling you to start Twitch Streams from the CLI.
-I mainly use it for watching Streams with the Raspberry Pi which is connected to my TV (via HDMI). However you can also use it on a usual machine with vlc.
+Twitchscript is a little Python script for linux, enabling you to start Twitch Streams from the CLI.
+I mainly use it for watching Streams with the Raspberry Pi which is connected to my TV (via HDMI). 
+However you can also use it on a usual machine with vlc.
 It might not be perfect but it does work atleast :)
 
 Requirements: 
@@ -14,7 +15,6 @@ Requirements:
 Todo:
 - input validation
 - fix problem with special characters
-- what if there are less channels than u want to get?
 
 """
 
