@@ -42,7 +42,7 @@ channels = []
 
 def getTwitchApiRequestStreams(limit, game):
 	#print 'using: ' + twitchApiUrl + 'streams?limit=' + str(limit) + '&game=' + game
-	return urllib2.urlopen(twitchApiUrl + 'streams?limit=' + str(limit) + '&game=' + game).read()
+	return urllib2.urlopen((twitchApiUrl + 'streams?limit=' + str(limit) + '&game=' + game).encode('UTF-8')).read()
 
 def getTwitchApiRequestGames(limit):
 	#print 'using: ' + twitchApiUrl + 'games/top?limit=' + str(limit)
@@ -68,7 +68,13 @@ def showChannels():
 			print '%d %s' % (i + 1, channels[i])
 
 def getGames():
+	global gameLimit
+
 	gamesDict = json.loads(getTwitchApiRequestGames(gameLimit))
+
+	if gameLimit > len(gamesDict['top']):
+		gameLimit = len(gamesDict['top'])
+		print 'Only ' + str(gameLimit) + ' games available!'
 
 	for i in range(gameLimit):
 		games.append(gamesDict['top'][i]['game']['name'])
