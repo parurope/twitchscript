@@ -102,7 +102,22 @@ def transformSpaces(stringToTransform):
 def clearScreen():
 	os.system('clear')
 
-def menu():
+def getUserInput(message, validValues):
+	
+	userInputValid = False
+	
+	while not userInputValid:
+		try:
+			choice = int(raw_input('%s\n> ' % message))
+			if choice in validValues:
+				userInputValid = True
+			else: 
+				raise ValueError()
+		except ValueError:
+			print 'Wrong Input! Please enter valid Values!'
+	return choice
+
+def run():
 	while True:
 		clearScreen()
 		print '\nLoading'
@@ -113,8 +128,7 @@ def menu():
 		print '------------------------------------------------------------'
 		showGames()
 		
-		print '\nChoose game by number (0 for exit):'
-		chosenGame = raw_input('> ')
+		chosenGame = getUserInput('\nChoose game by number (0 for exit):', range(gameLimit + 1))
 
 		clearScreen()
 		if int(chosenGame) in range(0, len(games) + 1):
@@ -125,9 +139,8 @@ def menu():
 
 		showChannels()
 
-		print '\nChoose channel by number (0 for exit):'
-		chosenChannel = raw_input('> ')
-
+		chosenChannel = getUserInput('\nChoose channel by number (0 for exit):', range(channelLimit + 1))
+		
 		clearScreen()
 		if int(chosenChannel) in range(0, len(channels) + 1):
 			if int(chosenChannel) is 0:
@@ -137,7 +150,7 @@ def menu():
 		reset()
 
 def main():
-	menu()
+	run()
 
 if __name__ == '__main__':
     main()
