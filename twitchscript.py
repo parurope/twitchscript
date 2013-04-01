@@ -102,7 +102,7 @@ def transformSpaces(stringToTransform):
 def clearScreen():
     os.system('clear')
 
-def getUserInput(message, validValues):
+def getUserInput(message, validValues, choices):
 
     userInputValid = False
 
@@ -114,38 +114,47 @@ def getUserInput(message, validValues):
             else:
                 raise ValueError()
         except ValueError:
+            clearScreen()
             print 'Wrong Input! Please enter valid Values!'
+            print '------------------------------------------------------------'
+            if choices == 1:
+                showGames()
+            else:
+                showChannels()
     return choice
 
 def run():
     while True:
         clearScreen()
+        print 'Welcome to twitchscript!'
         print '\nLoading'
         getGames()
         clearScreen()
-        print '\nWelcome to twitchscript!'
-        print '\nShowing top %s games:' % str(gameLimit)
+        print 'Showing top %s games:' % str(gameLimit)
         print '------------------------------------------------------------'
         showGames()
 
-        chosenGame = getUserInput('\nChoose game by number (0 for exit):', range(gameLimit + 1))
+        chosenGame = getUserInput('\nChoose game by number (0 for exit):', range(gameLimit + 1), 1)
 
         clearScreen()
         if int(chosenGame) in range(0, len(games) + 1):
             if int(chosenGame) is 0:
                 sys.exit(0)
-            print '\nLoading channellist: "%s"\n' % games[int(chosenGame) - 1]
+            print 'Loading channellist: "%s"\n' % games[int(chosenGame) - 1]
             getChannels(transformSpaces(games[int(chosenGame) - 1]))
 
+        clearScreen()
+        print 'Showing top %s channels:' % str(channelLimit)
+        print '------------------------------------------------------------'
         showChannels()
 
-        chosenChannel = getUserInput('\nChoose channel by number (0 for exit):', range(channelLimit + 1))
+        chosenChannel = getUserInput('\nChoose channel by number (0 for exit):', range(channelLimit + 1), 2)
 
         clearScreen()
         if int(chosenChannel) in range(0, len(channels) + 1):
             if int(chosenChannel) is 0:
                 sys.exit(0)
-            print '\nLoading stream: "%s"\n' % channels[int(chosenChannel) - 1]
+            print 'Loading stream: "%s"\n' % channels[int(chosenChannel) - 1]
             playStream(channels[int(chosenChannel) - 1])
         reset()
 
