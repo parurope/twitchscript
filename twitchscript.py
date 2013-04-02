@@ -5,7 +5,7 @@
 Twitchscript is a little Python Script for Linux, enabling you to start Twitch Streams from the CLI.
 It basically provides a menu so that u dont need to browse Twitch in order to get the current streams.
 I mainly use it for watching streams with the Raspberry Pi which is connected to my TV (via HDMI).
-However you can also use it on a usual machine with vlc.
+However you can also use it on a normal machine with vlc.
 
 I am new to python so feel free to criticize me.
 Hints and suggestions are appreciated.
