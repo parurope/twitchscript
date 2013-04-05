@@ -16,9 +16,8 @@ Requirements:
 - you may have to adapt some settings regarding your environment
 
 Todo:
-- input validation
 - error handling
-- fix problem with special characters
+- encapsulate menu
 
 """
 
@@ -130,7 +129,7 @@ def main():
         print '\nLoading'
         getGames()
         clearScreen()
-        print 'Showing top %s games:' % str(gameLimit)
+        print 'Showing top %d games:' % gameLimit
         print '-' * 40
         showGames()
 
@@ -144,7 +143,7 @@ def main():
             getChannels(transformSpaces(games[int(chosenGame) - 1]))
 
         clearScreen()
-        print 'Showing top %s channels:' % str(channelLimit)
+        print 'Showing top %d channels:' % channelLimit
         print '-' * 40
         showChannels()
 
