@@ -42,7 +42,7 @@ channels = []
 
 def getTwitchApiRequestStreams(limit, game):
     #print 'using: ' + twitchApiUrl + 'streams?limit=' + str(limit) + '&game=' + game
-    return urllib2.urlopen('%sstreams?limit=%d&game=%s' % (twitchApiUrl, limit, game)).encode('UTF-8').read()
+    return urllib2.urlopen(('%sstreams?limit=%d&game=%s' % (twitchApiUrl, limit, game)).encode('UTF-8')).read()
 
 def getTwitchApiRequestGames(limit):
     #print 'using: ' + twitchApiUrl + 'games/top?limit=' + str(limit)
@@ -116,7 +116,7 @@ def getUserInput(message, validValues, choices):
         except ValueError:
             clearScreen()
             print 'Wrong Input! Please enter valid Values!'
-            print '-' * 20
+            print '-' * 40
             if choices == 1:
                 showGames()
             else:
@@ -131,7 +131,7 @@ def main():
         getGames()
         clearScreen()
         print 'Showing top %s games:' % str(gameLimit)
-        print '-' * 20
+        print '-' * 40
         showGames()
 
         chosenGame = getUserInput('\nChoose game by number (0 for exit):', range(gameLimit + 1), 1)
@@ -145,7 +145,7 @@ def main():
 
         clearScreen()
         print 'Showing top %s channels:' % str(channelLimit)
-        print '-' * 20
+        print '-' * 40
         showChannels()
 
         chosenChannel = getUserInput('\nChoose channel by number (0 for exit):', range(channelLimit + 1), 2)
