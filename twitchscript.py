@@ -28,8 +28,9 @@ import os
 
 # settings:
 
-# if you use a raspberry pi with omxplayer change this to 'True'!
-usingOmxPlayer = False
+# put command for whatever player should be used
+#playercommand = 'vlc'
+playercommand = 'omxplayer -o hdmi'
 # api url
 twitchApiUrl = 'https://api.twitch.tv/kraken/'
 # must be > 0 (max: 100)
@@ -78,10 +79,7 @@ def show(content):
         print '%d %s' % (i + 1, content[i])
 
 def playStream(channel):
-    if usingOmxPlayer:
-        os.system('livestreamer twitch.tv/%s best -np "omxplayer -o hdmi"' % channel)
-    else:
-        os.system('livestreamer twitch.tv/%s best' % channel)
+    os.system('livestreamer twitch.tv/%s best -np "%s"' % (channel, playercommand))
 
 def reset():
     channels[:] = []
