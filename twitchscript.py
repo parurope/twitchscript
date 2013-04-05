@@ -52,9 +52,11 @@ def getChannels(game):
     global channelLimit
 
     channeldict = json.loads(getTwitchApiRequestStreams(channelLimit, game))
-
-    if channelLimit > len(channeldict['streams']):
-        channelLimit = len(channeldict['streams'])
+        
+    receivedChannelCount = len(channeldict['streams'])
+    
+    if channelLimit > receivedChannelCount:
+        channelLimit = receivedChannelCount
         print 'Only %d channels available!' % channelLimit
 
     for i in range(channelLimit):
@@ -65,8 +67,10 @@ def getGames():
 
     gamesDict = json.loads(getTwitchApiRequestGames(gameLimit))
 
-    if gameLimit > len(gamesDict['top']):
-        gameLimit = len(gamesDict['top'])
+    receivedGameCount = len(gamesDict['top'])
+    
+    if gameLimit > receivedGameCount:
+        gameLimit = receivedGameCount
         print 'Only %d games available!' % gameLimit
 
     for i in range(gameLimit):
@@ -97,8 +101,8 @@ def getUserInput(message, validValues, choices):
 
     while not userInputValid:
         try:
-            choice = int(raw_input('%s\n> ' % message))
-            if choice in validValues:
+            userInput = int(raw_input('%s\n> ' % message))
+            if userInput in validValues:
                 userInputValid = True
             else:
                 raise ValueError()
@@ -110,7 +114,7 @@ def getUserInput(message, validValues, choices):
                 show(games)
             else:
                 show(channels)
-    return choice
+    return userInput
 
 def main():
     while True:
