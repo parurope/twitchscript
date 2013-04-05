@@ -34,9 +34,9 @@ playercommand = 'omxplayer -o hdmi'
 # api url
 twitchApiUrl = 'https://api.twitch.tv/kraken/'
 # must be > 0 (max: 100)
-gameLimit = 20
+gameLimit = 40
 # must be > 0 (max: 100)
-channelLimit = 20
+channelLimit = 40
 games = []
 channels = []
 
