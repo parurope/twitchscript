@@ -59,13 +59,6 @@ def getChannels(game):
     for i in range(channelLimit):
         channels.append(channeldict['streams'][i]['channel']['name'])
 
-def showChannels():
-    for i in range(len(channels)):
-        if i < 9:
-            print ' %d %s' % (i + 1, channels[i])
-        else:
-            print '%d %s' % (i + 1, channels[i])
-
 def getGames():
     global gameLimit
 
@@ -78,12 +71,11 @@ def getGames():
     for i in range(gameLimit):
         games.append(gamesDict['top'][i]['game']['name'])
 
-def showGames():
-    for i in range(len(games)):
+def show(content):
+    for i in range(len(content)):
         if i < 9:
-            print ' %d %s' % (i + 1, games[i])
-        else:
-            print '%d %s' % (i + 1, games[i])
+            print '',
+        print '%d %s' % (i + 1, content[i])
 
 def playStream(channel):
     if usingOmxPlayer:
@@ -117,9 +109,9 @@ def getUserInput(message, validValues, choices):
             print 'Wrong Input! Please enter valid Values!'
             print '-' * 40
             if choices == 1:
-                showGames()
+                show(games)
             else:
-                showChannels()
+                show(channels)
     return choice
 
 def main():
@@ -131,7 +123,7 @@ def main():
         clearScreen()
         print 'Showing top %d games:' % gameLimit
         print '-' * 40
-        showGames()
+        show(games)
 
         chosenGame = getUserInput('\nChoose game by number (0 for exit):', range(gameLimit + 1), 1)
 
@@ -145,7 +137,7 @@ def main():
         clearScreen()
         print 'Showing top %d channels:' % channelLimit
         print '-' * 40
-        showChannels()
+        show(channels)
 
         chosenChannel = getUserInput('\nChoose channel by number (0 for exit):', range(channelLimit + 1), 2)
 
