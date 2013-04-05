@@ -123,7 +123,7 @@ def getUserInput(message, validValues, choices):
                 showChannels()
     return choice
 
-def run():
+def main():
     while True:
         clearScreen()
         print 'Welcome to twitchscript!'
@@ -157,9 +157,6 @@ def run():
             print 'Loading stream: "%s"\n' % channels[int(chosenChannel) - 1]
             playStream(channels[int(chosenChannel) - 1])
         reset()
-
-def main():
-    run()
 
 if __name__ == '__main__':
     main()
