@@ -29,7 +29,7 @@ import os
 
 # settings:
 
-# if you use a raspberry pi with omxplayer change it to 'True'!
+# if you use a raspberry pi with omxplayer change this to 'True'!
 usingOmxPlayer = False
 # api url
 twitchApiUrl = 'https://api.twitch.tv/kraken/'
@@ -41,11 +41,11 @@ games = []
 channels = []
 
 def getTwitchApiRequestStreams(limit, game):
-    #print 'using: ' + twitchApiUrl + 'streams?limit=' + str(limit) + '&game=' + game
+    #print 'using: %sstreams?limit=%d&game=%s' % (twitchApiUrl, limit, game)
     return urllib2.urlopen(('%sstreams?limit=%d&game=%s' % (twitchApiUrl, limit, game)).encode('UTF-8')).read()
 
 def getTwitchApiRequestGames(limit):
-    #print 'using: ' + twitchApiUrl + 'games/top?limit=' + str(limit)
+    #print 'using: %sgames/top?limit=%d' % (twitchApiUrl, limit)
     return urllib2.urlopen('%sgames/top?limit=%d' % (twitchApiUrl, limit)).read()
 
 def getChannels(game):
@@ -55,7 +55,7 @@ def getChannels(game):
 
     if channelLimit > len(channeldict['streams']):
         channelLimit = len(channeldict['streams'])
-        print 'Only ' + str(channelLimit) + ' channels available!'
+        print 'Only %d channels available!' % channelLimit
 
     for i in range(channelLimit):
         channels.append(channeldict['streams'][i]['channel']['name'])
@@ -74,7 +74,7 @@ def getGames():
 
     if gameLimit > len(gamesDict['top']):
         gameLimit = len(gamesDict['top'])
-        print 'Only ' + str(gameLimit) + ' games available!'
+        print 'Only %d games available!' % gameLimit
 
     for i in range(gameLimit):
         games.append(gamesDict['top'][i]['game']['name'])
@@ -88,9 +88,9 @@ def showGames():
 
 def playStream(channel):
     if usingOmxPlayer:
-        os.system('livestreamer twitch.tv/' + channel + ' best -np "omxplayer -o hdmi"')
+        os.system('livestreamer twitch.tv/%s best -np "omxplayer -o hdmi"' % channel)
     else:
-        os.system('livestreamer twitch.tv/' + channel + ' best')
+        os.system('livestreamer twitch.tv/%s best' % channel)
 
 def reset():
     channels[:] = []
