@@ -2,22 +2,11 @@
 
 """
 
-Twitchscript is a little Python Script for Linux, enabling you to start Twitch Streams from the CLI.
-It basically provides a menu so that u dont need to browse Twitch in order to get the current streams.
-I mainly use it for watching streams with the Raspberry Pi which is connected to my TV (via HDMI).
-However you can also use it on a normal machine with vlc.
-
-I am new to python so feel free to criticize me.
-Hints and suggestions are appreciated.
-
-Requirements:
-- livestreamer must be installed (https://github.com/chrippa/livestreamer) -> easy install via "python-pip" (pip install livestreamer)
-- make this script executable (chmod +x) and run it!
-- you may have to adapt some settings regarding your environment
-
-Todo:
-- error handling
-- encapsulate menu
+Twitchscript is a little Python-Script for Linux, enabling you to start and
+watch Twitch Streams from the CLI.
+It basically provides a menu that grabs current streams from the Twitch API.
+I mainly use it for watching streams with my Raspberry Pi which is connected
+to TV (via HDMI). However you can also use it on a normal machine with vlc.
 
 """
 
@@ -26,27 +15,28 @@ import urllib2
 import sys
 import os
 
-# settings:
-
+# SETTINGS:
 # put command for whatever player should be used
-#playercommand = 'vlc'
+# playercommand = 'vlc'
 playercommand = 'omxplayer -o hdmi'
 # api url
 twitchApiUrl = 'https://api.twitch.tv/kraken/'
 # must be > 0 (max: 100)
-gameLimit = 40
+gameLimit = 30
 # must be > 0 (max: 100)
-channelLimit = 40
+channelLimit = 30
 games = []
 channels = []
 
 def getTwitchApiRequestStreams(limit, game):
     #print 'using: %sstreams?limit=%d&game=%s' % (twitchApiUrl, limit, game)
-    return urllib2.urlopen(('%sstreams?limit=%d&game=%s' % (twitchApiUrl, limit, game)).encode('UTF-8')).read()
+    return urllib2.urlopen(('%sstreams?limit=%d&game=%s' % (twitchApiUrl,
+        limit, game)).encode('UTF-8')).read()
 
 def getTwitchApiRequestGames(limit):
     #print 'using: %sgames/top?limit=%d' % (twitchApiUrl, limit)
-    return urllib2.urlopen('%sgames/top?limit=%d' % (twitchApiUrl, limit)).read()
+    return urllib2.urlopen('%sgames/top?limit=%d' % (twitchApiUrl,
+        limit)).read()
 
 def getChannels(game):
     global channelLimit
@@ -83,7 +73,8 @@ def show(content):
         print '%d %s' % (i + 1, content[i])
 
 def playStream(channel):
-    os.system('livestreamer twitch.tv/%s best -np "%s"' % (channel, playercommand))
+    os.system('livestreamer twitch.tv/%s best -np "%s"' % (channel,
+        playercommand))
 
 def reset():
     channels[:] = []
@@ -127,7 +118,8 @@ def main():
         print '-' * 40
         show(games)
 
-        chosenGame = getUserInput('\nChoose game by number (0 for exit):', range(gameLimit + 1), 1)
+        chosenGame = getUserInput('\nChoose game by number (0 for exit):',
+            range(gameLimit + 1), 1)
 
         clearScreen()
         if int(chosenGame) in range(0, len(games) + 1):
@@ -141,7 +133,8 @@ def main():
         print '-' * 40
         show(channels)
 
-        chosenChannel = getUserInput('\nChoose channel by number (0 for exit):', range(channelLimit + 1), 2)
+        chosenChannel = getUserInput('\nChoose channel by number (0 for exit):',
+            range(channelLimit + 1), 2)
 
         clearScreen()
         if int(chosenChannel) in range(0, len(channels) + 1):
