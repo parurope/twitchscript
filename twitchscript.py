@@ -16,7 +16,7 @@ import sys
 import os
 
 # SETTINGS:
-# put command for whatever player should be used
+# put command for whatever player should be used in linux (windows uses vlc)
 # playercommand = 'vlc'
 playercommand = 'omxplayer -o hdmi'
 # api url
@@ -73,7 +73,10 @@ def show(content):
         print '%d %s' % (i + 1, content[i])
 
 def playStream(channel):
-    os.system('livestreamer twitch.tv/%s best -np "%s"' % (channel,
+    if os.name == 'nt':
+		os.system('livestreamer twitch.tv/%s best' % channel)
+	else:
+		os.system('livestreamer twitch.tv/%s best -np "%s"' % (channel,
         playercommand))
 
 def reset():
@@ -84,7 +87,7 @@ def transformSpaces(stringToTransform):
     return stringToTransform.replace(' ', '%20')
 
 def clearScreen():
-    os.system('clear')
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 def getUserInput(message, validValues, choices):
 
