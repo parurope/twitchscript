@@ -16,7 +16,7 @@ import sys
 import os
 
 # SETTINGS:
-# put command for whatever player should be used in linux (windows uses vlc)
+# put command for whatever player should be used in linux (windows only using vlc so far)
 # playercommand = 'vlc'
 playercommand = 'omxplayer -o hdmi'
 # api url
