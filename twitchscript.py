@@ -40,7 +40,7 @@ def getTwitchApiRequestStreams(limit, game):
     except Exception as e:
         print 'Error getting Streams!\n'
         print e.message
-    finally:    
+    finally:
         response.close()
 
 def getTwitchApiRequestGames(limit):
@@ -53,8 +53,8 @@ def getTwitchApiRequestGames(limit):
     except Exception as e:
         print 'Error getting Games!\n'
         print e.message
-    finally:   
-        response.close()    
+    finally:
+        response.close()
 
 def getChannels(game):
     global channelLimit
