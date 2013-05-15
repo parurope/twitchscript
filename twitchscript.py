@@ -1,11 +1,14 @@
 #!/usr/bin/python
 
 """
-Twitchscript is a little Python-Script for Linux, enabling you to start and
+Twitchscript is a dirty Python-Script for Linux/Windows, enabling you to start and
 watch Twitch Streams from the CLI.
 It basically provides a menu that grabs current streams from the Twitch API.
 I mainly use it for watching streams with my Raspberry Pi which is connected
-to TV (via HDMI). However you can also use it on a normal machine with vlc.
+to TV (via HDMI). VLC is used by default as video player. Change the "playerCommand"
+setting for your needs (e.g. use omxplayer on a Rasperry Pi).
+
+Use "q" to quit watching the current channel and return to menu.
 """
 
 import json
@@ -17,9 +20,8 @@ import os
 SETTINGS:
 """
 
-# linuxPlayerCommand = 'vlc'
-linuxPlayerCommand = 'omxplayer -o hdmi'
-# api url
+playerCommand = 'vlc'
+#playerCommand = 'omxplayer -o hdmi'
 twitchApiUrl = 'https://api.twitch.tv/kraken/'
 # must be > 0 (max: 100)
 gameLimit = 30
@@ -90,10 +92,11 @@ def show(content):
 
 def playStream(channel):
     if os.name == 'nt':
-        os.system('livestreamer twitch.tv/%s best' % channel)
+        os.system('livestreamer twitch.tv/%s best -p "%s"' % channel,
+        playerCommand)
     else:
         os.system('livestreamer twitch.tv/%s best -np "%s"' % (channel,
-        linuxPlayerCommand))
+        playerCommand))
 
 def reset():
     channels[:] = []
