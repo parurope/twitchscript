@@ -30,13 +30,29 @@ channels = []
 
 def getTwitchApiRequestStreams(limit, game):
     #print 'using: %sstreams?limit=%d&game=%s' % (twitchApiUrl, limit, game)
-    return urllib2.urlopen(('%sstreams?limit=%d&game=%s' % (twitchApiUrl,
-        limit, game)).encode('UTF-8')).read()
+    try:
+        response = urllib2.urlopen(('%sstreams?limit=%d&game=%s' % (twitchApiUrl,
+        limit, game)).encode('UTF-8'))
+        streams = response.read()
+        return streams
+    except Exception as e:
+        print 'Error getting Streams!\n'
+        print e.message
+    finally:    
+        response.close()
 
 def getTwitchApiRequestGames(limit):
     #print 'using: %sgames/top?limit=%d' % (twitchApiUrl, limit)
-    return urllib2.urlopen('%sgames/top?limit=%d' % (twitchApiUrl,
-        limit)).read()
+    try:
+        response = urllib2.urlopen('%sgames/top?limit=%d' % (twitchApiUrl,
+        limit))
+        games = response.read()
+        return games
+    except Exception as e:
+        print 'Error getting Games!\n'
+        print e.message
+    finally:   
+        response.close()    
 
 def getChannels(game):
     global channelLimit
