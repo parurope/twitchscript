@@ -9,6 +9,23 @@ to TV (via HDMI). VLC is used by default as video player. Change the "playerComm
 setting for your needs (e.g. use omxplayer on a Rasperry Pi).
 
 Use "q" to quit watching the current channel and return to menu.
+
+
+Install:
+not complete yet!
+
+Linux (debian):
+1. sudo apt-get install rtmpdump vlc python-pip
+2. sudo pip install livestreamer
+3. start this script
+
+Windows 7:
+1. install python 2.7
+2. install vlc
+3. .... install rtmpdump & livestreamer .... (need to specify that)
+4. add folders of python, rtmpdump and vlc to path variable
+5. start this script
+
 """
 
 import json
