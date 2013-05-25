@@ -92,8 +92,8 @@ def show(content):
 
 def playStream(channel):
     if os.name == 'nt':
-        os.system('livestreamer twitch.tv/%s best -p "%s"' % channel,
-        playerCommand)
+        os.system('livestreamer twitch.tv/%s best -p "%s"' % (channel,
+        playerCommand))
     else:
         os.system('livestreamer twitch.tv/%s best -np "%s"' % (channel,
         playerCommand))
