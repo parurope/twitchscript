@@ -51,7 +51,7 @@ def getTwitchApiRequestStreams(limit, game):
     #print 'using: %sstreams?limit=%d&game=%s' % (twitchApiUrl, limit, game)
     try:
         response = urllib2.urlopen(('%sstreams?limit=%d&game=%s' % (twitchApiUrl,
-        limit, game)).encode('UTF-8'))
+        limit, game)).encode('utf-8'))
         streams = response.read()
         return streams
     except Exception as e:
@@ -63,8 +63,8 @@ def getTwitchApiRequestStreams(limit, game):
 def getTwitchApiRequestGames(limit):
     #print 'using: %sgames/top?limit=%d' % (twitchApiUrl, limit)
     try:
-        response = urllib2.urlopen('%sgames/top?limit=%d' % (twitchApiUrl,
-        limit))
+        response = urllib2.urlopen(('%sgames/top?limit=%d' % (twitchApiUrl,
+        limit)).encode('utf-8'))
         games = response.read()
         return games
     except Exception as e:
