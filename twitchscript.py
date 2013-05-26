@@ -11,19 +11,20 @@ setting for your needs (e.g. use omxplayer on a Rasperry Pi).
 Use "q" to quit watching the current channel and return to menu.
 
 
-Install:
-not complete yet!
+How to Install:
 
-Linux (debian):
-1. sudo apt-get install rtmpdump vlc python-pip
+Linux (Debian/Raspian and many more):
+1. sudo apt-get install rtmpdump python-pip
 2. sudo pip install livestreamer
-3. start this script
+3. sudo chmod +x twitchscript.py (give this file execution permissions)
+4. make sure you have the player installed that is set at "playerCommand"
+5. start this script
 
 Windows 7:
 1. install python 2.7
-2. install vlc
-3. .... install rtmpdump & livestreamer .... (need to specify that)
-4. add folders of python, rtmpdump and vlc to path variable
+2. .... install rtmpdump & livestreamer .... (need to specify that)
+3. add folders of python, rtmpdump and vlc to path variable
+4. make sure you have the player installed that is set at "playerCommand"
 5. start this script
 
 """
