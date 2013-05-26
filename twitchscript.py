@@ -34,16 +34,19 @@ import sys
 import os
 
 """
-SETTINGS:
+Settings:
 """
-
 playerCommand = 'vlc'
 #playerCommand = 'omxplayer -o hdmi'
+# must be > 0 (max: 100)
+gameLimit = 100
+# must be > 0 (max: 100)
+channelLimit = 100
+
+"""
+Dont change:
+"""
 twitchApiUrl = 'https://api.twitch.tv/kraken/'
-# must be > 0 (max: 100)
-gameLimit = 30
-# must be > 0 (max: 100)
-channelLimit = 30
 games = []
 channels = []
 
@@ -105,6 +108,8 @@ def show(content):
     for i in range(len(content)):
         if i < 9:
             print '',
+        if i < 99:
+            print '',            
         print '%d %s' % (i + 1, content[i])
 
 def playStream(channel):
@@ -184,4 +189,8 @@ def main():
         reset()
 
 if __name__ == '__main__':
-    main()
+    if (channelLimit < 0  or channelLimit > 100) or (gameLimit < 0 or gameLimit > 100):
+        clearScreen()
+        print 'Check your Settings -> wrong channelLimit or gameLimit set!'
+    else:    
+        main()
