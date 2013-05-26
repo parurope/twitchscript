@@ -50,6 +50,8 @@ Dont change:
 twitchApiUrl = 'https://api.twitch.tv/kraken/'
 games = []
 channels = []
+gL = gameLimit
+cL = channelLimit
 
 def getTwitchApiRequestStreams(limit, game):
     #print 'using: %sstreams?limit=%d&game=%s' % (twitchApiUrl, limit, game)
@@ -122,8 +124,13 @@ def playStream(channel):
         playerCommand))
 
 def reset():
+    global gameLimit
+    global channelLimit
+
     channels[:] = []
     games[:] = []
+    gameLimit = gL
+    channelLimit = cL
 
 def transformSpaces(stringToTransform):
     return stringToTransform.replace(' ', '%20')
