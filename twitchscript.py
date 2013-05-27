@@ -39,10 +39,10 @@ Settings:
 """
 playerCommand = 'vlc'
 #playerCommand = 'omxplayer -o hdmi'
-# must be > 0 (max: 100)
-gameLimit = 100
-# must be > 0 (max: 100)
-channelLimit = 100
+# how many games should be displayed? -> must be > 0 (max: 100)
+gameLimit = 60
+# how many channels/streams should be displayed? -> must be > 0 (max: 100)
+channelLimit = 60
 
 """
 Dont change:
@@ -50,8 +50,6 @@ Dont change:
 twitchApiUrl = 'https://api.twitch.tv/kraken/'
 games = []
 channels = []
-gL = gameLimit
-cL = channelLimit
 
 def getTwitchApiRequestStreams(limit, game):
     #print 'using: %sstreams?limit=%d&game=%s' % (twitchApiUrl, limit, game)
@@ -80,31 +78,29 @@ def getTwitchApiRequestGames(limit):
         response.close()
 
 def getChannels(game):
-    global channelLimit
-
     channeldict = json.loads(getTwitchApiRequestStreams(channelLimit, game))
-        
-    receivedChannelCount = len(channeldict['streams'])
-    
-    if channelLimit > receivedChannelCount:
-        channelLimit = receivedChannelCount
-        print 'Only %d channels available!' % channelLimit
 
-    for i in range(channelLimit):
+    receivedChannelCount = len(channeldict['streams'])
+    TmpChannelLimit = channelLimit  
+    
+    if TmpChannelLimit > receivedChannelCount:
+        TmpChannelLimit = receivedChannelCount
+        print 'Only %d channels available!' % TmpChannelLimit
+
+    for i in range(TmpChannelLimit):
         channels.append(channeldict['streams'][i]['channel']['name'])
 
 def getGames():
-    global gameLimit
-
     gamesDict = json.loads(getTwitchApiRequestGames(gameLimit))
 
     receivedGameCount = len(gamesDict['top'])
+    TmpGameLimit = gameLimit
     
-    if gameLimit > receivedGameCount:
-        gameLimit = receivedGameCount
-        print 'Only %d games available!' % gameLimit
+    if TmpGameLimit > receivedGameCount:
+        TmpGameLimit = receivedGameCount
+        print 'Only %d games available!' % TmpGameLimit
 
-    for i in range(gameLimit):
+    for i in range(TmpGameLimit):
         games.append(gamesDict['top'][i]['game']['name'])
 
 def show(content):
@@ -124,13 +120,8 @@ def playStream(channel):
         playerCommand))
 
 def reset():
-    global gameLimit
-    global channelLimit
-
-    channels[:] = []
-    games[:] = []
-    gameLimit = gL
-    channelLimit = cL
+    del channels[:]
+    del games[:]
 
 def transformSpaces(stringToTransform):
     return stringToTransform.replace(' ', '%20')
