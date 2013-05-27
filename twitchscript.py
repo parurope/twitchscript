@@ -11,7 +11,7 @@ setting for your needs (e.g. use omxplayer on a Rasperry Pi).
 Use "q" to quit watching the current channel and return to menu.
 
 
-How to Install:
+How to Install/Run:
 
 Linux (Debian/Raspian and many more):
 1. sudo apt-get install rtmpdump python-pip
