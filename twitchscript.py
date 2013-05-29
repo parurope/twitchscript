@@ -21,11 +21,17 @@ Linux (Debian/Raspian and many more):
 5. start this script
 
 Windows 7:
-1. install python 2.7
-2. .... install rtmpdump & livestreamer .... (need to specify that)
-3. add folders of python, rtmpdump and vlc to path variable
-4. make sure you have the player installed that is set at "playerCommand"
-5. start this script
+ 1. install python 2.7 - 32 bit version
+ 2. add Python install folder to Windows path variable
+ 3. install distribute - https://pypi.python .org/pypi/distribute
+ 4. install pip - https://pypi.python.org/pypi/pip
+ 5. add  Python "Script" folder to Windows path variable (e.g. C:\Python27\Scripts)
+ 6. install livestreamer via pip from command line: "pip install livestreamer" 
+ 7. install/unzip rtmpdump - http://rtmpdump.mplayerhq.hu/
+ 8. add rtmpdump folder to Windows path variable
+ 9. make sure you have the player installed that is set at "playerCommand" AND 
+    added the folder to Windows path variable
+10. start this script
 
 """
 
@@ -152,8 +158,6 @@ def getUserInput(message, validValues, choices):
 
 def main():
     while True:
-        clearScreen()
-        print 'Welcome to twitchscript!'
         print '\nLoading'
         getGames()
         clearScreen()
@@ -192,4 +196,6 @@ if __name__ == '__main__':
         clearScreen()
         print 'Check your Settings -> wrong channelLimit or gameLimit set!'
     else:    
+        clearScreen()
+        print 'Welcome to twitchscript!'
         main()
