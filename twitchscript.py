@@ -96,6 +96,8 @@ def getChannels(game):
     for i in range(TmpChannelLimit):
         channels.append(channeldict['streams'][i]['channel']['name'])
 
+    return TmpChannelLimit
+
 def getGames():
     gamesDict = json.loads(getTwitchApiRequestGames(gameLimit))
 
@@ -108,6 +110,8 @@ def getGames():
 
     for i in range(TmpGameLimit):
         games.append(gamesDict['top'][i]['game']['name'])
+
+    return TmpGameLimit
 
 def show(content):
     for i in range(len(content)):
@@ -159,21 +163,21 @@ def getUserInput(message, validValues, choices):
 def main():
     while True:
         print '\nLoading'
-        getGames()
+        TmpGameLimit = getGames()
         clearScreen()
         print 'Showing top %d games:' % gameLimit
         print '-' * 40
         show(games)
 
         chosenGame = getUserInput('\nChoose game by number (0 for exit):',
-            range(gameLimit + 1), 1)
+            range(TmpGameLimit + 1), 1)
 
         clearScreen()
         if int(chosenGame) in range(0, len(games) + 1):
             if int(chosenGame) is 0:
                 sys.exit(0)
             print 'Loading channellist: "%s"\n' % games[int(chosenGame) - 1]
-            getChannels(transformSpaces(games[int(chosenGame) - 1]))
+            TmpChannelLimit = getChannels(transformSpaces(games[int(chosenGame) - 1]))
 
         clearScreen()
         print 'Showing top %d channels:' % channelLimit
@@ -181,7 +185,7 @@ def main():
         show(channels)
 
         chosenChannel = getUserInput('\nChoose channel by number (0 for exit):',
-            range(channelLimit + 1), 2)
+            range(TmpChannelLimit + 1), 2)
 
         clearScreen()
         if int(chosenChannel) in range(0, len(channels) + 1):
