@@ -1,37 +1,51 @@
 #!/usr/bin/python
 
 """
-Twitchscript is a dirty Python-Script for Linux/Windows, enabling you to start and
-watch Twitch Streams from the CLI.
-It basically provides a menu that grabs current streams from the Twitch API.
-I mainly use it for watching streams with my Raspberry Pi which is connected
-to TV (via HDMI). VLC is used by default as video player. Change the "playerCommand"
-setting for your needs (e.g. use omxplayer on a Rasperry Pi).
+Cambios hechos por Paruro.pe:
+=============================
 
-Use "q" to quit watching the current channel and return to menu.
+10/09/2013:
+===========
+1. comentarios traducidos
+2. omxplayer seleccionado por defecto para que funcione en el Raspberry Pi
+3. anadida la opcion para cambiar la calidad, puesta en 'medium' por defecto
+4. interfaz traducida a espanol
 
+Pompetardo
 
-How to Install/Run:
+==================================================================================================
 
-Linux (Debian/Raspian and many more):
+Twitchscript es un script burdo escrito en Python para Linux/Windows, que te permite
+iniciar y ver transmisiones de Twitch desde la linea de comandos.
+Basicamente provee un menu que toma las transmisiones actuales del Twitch API.
+Yo lo uso principalmente para ver transmisiones desde mi Raspberry Pi que esta
+conectado a mi TV (via HDMI). VLC es usado por defecto como reproductor de video.
+Cambia la configuracion "playerCommand" segun tus necesidades (p.ej. usa omxplayer
+en el Raspberry Pi)
+
+Usa "q" para salir del canal que estes viendo y regresar al menu.
+
+Como Instalar/Ejecutar:
+
+Linux (Debian/Raspian y otras distribuciones):
 1. sudo apt-get install rtmpdump python-pip
 2. sudo pip install livestreamer
-3. sudo chmod +x twitchscript.py (give this file execution permissions)
-4. make sure you have the player installed that is set at "playerCommand"
-5. start this script
+3. sudo chmod +x twitchscript.py (dale permiso a este archivo para ser ejecutado)
+4. asegurate de que este instalado el reproductor que esta definido en "playerCommand"
+5. inicia el script
 
 Windows 7:
- 1. install python 2.7 - 32 bit version
- 2. add Python install folder to Windows path variable
- 3. install distribute - https://pypi.python .org/pypi/distribute
- 4. install pip - https://pypi.python.org/pypi/pip
- 5. add  Python "Script" folder to Windows path variable (e.g. C:\Python27\Scripts)
- 6. install livestreamer via pip from command line: "pip install livestreamer" 
- 7. install/unzip rtmpdump - http://rtmpdump.mplayerhq.hu/
- 8. add rtmpdump folder to Windows path variable
- 9. make sure you have the player installed that is set at "playerCommand" AND 
-    added the folder to Windows path variable
-10. start this script
+ 1. instala python 2.7 - version de 32 bit
+ 2. anade el folder de instalacion de Python a la variable de ruta de Windows
+ 3. instala distribute - https://pypi.python .org/pypi/distribute
+ 4. instala pip - https://pypi.python.org/pypi/pip
+ 5. anade el folder "Script" de Python  a la variable de ruta de Windows (p.ej. C:\Python27\Scripts)
+ 6. instala livestreamer con pip desde la linea de comandos: "pip install livestreamer" 
+ 7. instala/descomprime rtmpdump - http://rtmpdump.mplayerhq.hu/
+ 8. anade el fornde de rtmpdump a la variable de ruta de Windows
+ 9. asegurate de que este instalado el reproductor que esta definido en "playerCommand" Y 
+    que su folder este anadido a la variable de ruta de Windows
+10. inicia el script
 
 """
 
@@ -41,17 +55,20 @@ import sys
 import os
 
 """
-Settings:
+Configuracion:
 """
-playerCommand = 'vlc'
-#playerCommand = 'omxplayer -o hdmi'
-# how many games should be displayed? -> must be > 0 (max: 100)
+#playerCommand = 'vlc'
+playerCommand = 'omxplayer -o hdmi'
+# cuantos juegos quieres que se muestren? -> debe ser > 0 (max: 100)
 gameLimit = 60
-# how many channels/streams should be displayed? -> must be > 0 (max: 100)
+# cuantos canales/transmisiones quieres que se muestren? -> must be > 0 (max: 100)
 channelLimit = 60
+# Que calidad deseas que tenga la transmision?
+# -> low(baja), medium(media), high(alta), best(maxima)
+quality = 'medium'
 
 """
-Dont change:
+NO CAMBIAR:
 """
 twitchApiUrl = 'https://api.twitch.tv/kraken/'
 games = []
@@ -65,7 +82,7 @@ def getTwitchApiRequestStreams(limit, game):
         streams = response.read()
         return streams
     except Exception as e:
-        print 'Error getting Streams!\n'
+        print 'Error obteniendo la Transmision!\n'
         print e.message
     finally:
         response.close()
@@ -78,7 +95,7 @@ def getTwitchApiRequestGames(limit):
         games = response.read()
         return games
     except Exception as e:
-        print 'Error getting Games!\n'
+        print 'Error obteniendo los Juegos!\n'
         print e.message
     finally:
         response.close()
@@ -91,7 +108,7 @@ def getChannels(game):
     
     if TmpChannelLimit > receivedChannelCount:
         TmpChannelLimit = receivedChannelCount
-        print 'Only %d channels available!' % TmpChannelLimit
+        print 'Solo %d canales disponibles!' % TmpChannelLimit
 
     for i in range(TmpChannelLimit):
         channels.append(channeldict['streams'][i]['channel']['name'])
@@ -106,7 +123,7 @@ def getGames():
     
     if TmpGameLimit > receivedGameCount:
         TmpGameLimit = receivedGameCount
-        print 'Only %d games available!' % TmpGameLimit
+        print 'Solo %d juegos disponibles!' % TmpGameLimit
 
     for i in range(TmpGameLimit):
         games.append(gamesDict['top'][i]['game']['name'])
@@ -123,11 +140,11 @@ def show(content):
 
 def playStream(channel):
     if os.name == 'nt':
-        os.system('livestreamer twitch.tv/%s best -p "%s"' % (channel,
-        playerCommand))
+        os.system('livestreamer twitch.tv/%s %s -p "%s"' % (channel,
+        quality, playerCommand))
     else:
-        os.system('livestreamer twitch.tv/%s best -np "%s"' % (channel,
-        playerCommand))
+        os.system('livestreamer twitch.tv/%s %s -np "%s"' % (channel,
+        quality, playerCommand))
 
 def reset():
     del channels[:]
@@ -152,7 +169,7 @@ def getUserInput(message, validValues, choices):
                 raise ValueError()
         except ValueError:
             clearScreen()
-            print 'Wrong Input! Please enter valid Values!'
+            print 'Entrada Erronea! Porfavor ingresar valores Validos!'
             print '-' * 40
             if choices == 1:
                 show(games)
@@ -162,44 +179,44 @@ def getUserInput(message, validValues, choices):
 
 def main():
     while True:
-        print '\nLoading'
+        print '\nCargando'
         TmpGameLimit = getGames()
         clearScreen()
-        print 'Showing top %d games:' % gameLimit
+        print 'Mostrando %d juegos top:' % gameLimit
         print '-' * 40
         show(games)
 
-        chosenGame = getUserInput('\nChoose game by number (0 for exit):',
+        chosenGame = getUserInput('\nEscoge el juego por numero (0 para salir):',
             range(TmpGameLimit + 1), 1)
 
         clearScreen()
         if int(chosenGame) in range(0, len(games) + 1):
             if int(chosenGame) is 0:
                 sys.exit(0)
-            print 'Loading channellist: "%s"\n' % games[int(chosenGame) - 1]
+            print 'Cargando lista de canales: "%s"\n' % games[int(chosenGame) - 1]
             TmpChannelLimit = getChannels(transformSpaces(games[int(chosenGame) - 1]))
 
         clearScreen()
-        print 'Showing top %d channels:' % channelLimit
+        print 'Mostrando %d canales top:' % channelLimit
         print '-' * 40
         show(channels)
 
-        chosenChannel = getUserInput('\nChoose channel by number (0 for exit):',
+        chosenChannel = getUserInput('\nEscoge el canal por numero (0 para salir):',
             range(TmpChannelLimit + 1), 2)
 
         clearScreen()
         if int(chosenChannel) in range(0, len(channels) + 1):
             if int(chosenChannel) is 0:
                 sys.exit(0)
-            print 'Loading stream: "%s"\n' % channels[int(chosenChannel) - 1]
+            print 'Cargando transmision: "%s"\n' % channels[int(chosenChannel) - 1]
             playStream(channels[int(chosenChannel) - 1])
         reset()
 
 if __name__ == '__main__':
     if (channelLimit < 0  or channelLimit > 100) or (gameLimit < 0 or gameLimit > 100):
         clearScreen()
-        print 'Check your Settings -> wrong channelLimit or gameLimit set!'
+        print 'Revisa tus Configuraciones -> channelLimit o gameLimit erroneos!'
     else:    
         clearScreen()
-        print 'Welcome to twitchscript!'
+        print 'Bienvenido a twitchscript!'
         main()
